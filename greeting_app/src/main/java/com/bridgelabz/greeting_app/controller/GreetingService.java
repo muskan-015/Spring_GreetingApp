@@ -2,10 +2,17 @@ package com.bridgelabz.greeting_app.controller;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GreetingService {
+    private final GreetingRepository greetingRepository;
+
     public String getGreetingMessage() {
         return "Hello World";
+    }
+    public GreetingService(GreetingRepository greetingRepository) {
+        this.greetingRepository = greetingRepository;
     }
     public String getGreetingMessage(String firstName, String lastName) {
         if (firstName != null && lastName != null) {
@@ -15,6 +22,10 @@ public class GreetingService {
         } else if (lastName != null) {
             return "Hello, Mr./Ms. " + lastName + "!";
         }
+        greetingRepository.save(new Greeting());
         return "Hello World!";
+    }
+    public Optional<Greeting> getGreetingById(Long id) {
+        return greetingRepository.findById(id);
     }
 }
