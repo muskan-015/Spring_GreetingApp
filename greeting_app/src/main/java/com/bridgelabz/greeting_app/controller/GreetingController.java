@@ -57,4 +57,5 @@ public class GreetingController {
         response.put("message", greetingService.getGreetingMessage(firstName, lastName));
         return ResponseEntity.ok(response);
     }
+
 }
