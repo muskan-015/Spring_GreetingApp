@@ -105,5 +105,16 @@ public class GreetingController {
             return ResponseEntity.notFound().build();
         }
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> deleteGreeting(@PathVariable Long id) {
+        boolean deleted = greetingService.deleteGreeting(id);
 
+        if (deleted) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Greeting deleted successfully!");
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
