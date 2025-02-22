@@ -25,6 +25,23 @@ public class GreetingService {
         greetingRepository.save(new Greeting());
         return "Hello World!";
     }
+    public String getGreetingMsg(String firstName, String lastName) {
+        String message;
+
+        if (firstName != null && lastName != null) {
+            message = "Hello, " + firstName + " " + lastName + "!";
+        } else if (firstName != null) {
+            message = "Hello, " + firstName + "!";
+        } else if (lastName != null) {
+            message = "Hello, Mr./Ms. " + lastName + "!";
+        } else {
+            message = "Hello World!";
+        }
+
+        // Save greeting to the database
+        Greeting savedGreeting = greetingRepository.save(new Greeting(message));
+        return "Greeting saved with ID: " + savedGreeting.getId();
+    }
     public Optional<Greeting> getGreetingById(Long id) {
         return greetingRepository.findById(id);
     }
