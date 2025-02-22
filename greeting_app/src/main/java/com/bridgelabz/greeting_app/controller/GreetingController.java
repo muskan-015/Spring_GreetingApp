@@ -1,5 +1,6 @@
 package com.bridgelabz.greeting_app.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,23 @@ public class GreetingController {
     public ResponseEntity<Map<String, String>> deleteGreeting() {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Hello from DELETE");
+        return ResponseEntity.ok(response);
+    }
+
+    private final GreetingService greetingService;
+
+    @Autowired
+    public GreetingController(GreetingService greetingService) {
+        this.greetingService = greetingService;
+    }
+
+    @GetMapping("/hello")
+    public ResponseEntity<Map<String, String>> getGreeting(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", greetingService.getGreetingMessage(firstName, lastName));
         return ResponseEntity.ok(response);
     }
 }
