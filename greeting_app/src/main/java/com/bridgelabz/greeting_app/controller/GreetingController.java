@@ -5,8 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/greeting")
@@ -71,6 +73,20 @@ public class GreetingController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<Map<String, String>>> getAllGreetings() {
+        List<Greeting> greetings = greetingService.getAllGreetings();
 
+        List<Map<String, String>> response = greetings.stream()
+                .map(greeting -> {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("id", greeting.getId().toString());
+                    map.put("message", greeting.getMessage());
+                    return map;
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(response);
+    }
 
 }
