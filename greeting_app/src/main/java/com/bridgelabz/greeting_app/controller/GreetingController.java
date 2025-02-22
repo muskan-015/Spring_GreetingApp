@@ -1,0 +1,42 @@
+package com.bridgelabz.greeting_app.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/greeting")
+public class GreetingController {
+
+    @GetMapping
+    public ResponseEntity<Map<String, String>> getGreeting() {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Hello from GET");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping
+    public ResponseEntity<Map<String, String>> postGreeting(@RequestBody Map<String, String> request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Hello from POST");
+        response.put("received", request.toString());
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<Map<String, String>> putGreeting(@RequestBody Map<String, String> request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Hello from PUT");
+        response.put("updated", request.toString());
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Map<String, String>> deleteGreeting() {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Hello from DELETE");
+        return ResponseEntity.ok(response);
+    }
+}
