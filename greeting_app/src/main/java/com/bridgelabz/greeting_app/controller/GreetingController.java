@@ -89,4 +89,21 @@ public class GreetingController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, String>> updateGreeting(
+            @PathVariable Long id,
+            @RequestParam String newMessage) {
+
+        Optional<Greeting> updatedGreeting = greetingService.updateGreeting(id, newMessage);
+
+        if (updatedGreeting.isPresent()) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Greeting updated successfully!");
+            response.put("updatedMessage", updatedGreeting.get().getMessage());
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
